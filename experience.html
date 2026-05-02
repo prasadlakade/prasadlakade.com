@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience — Prasad Lakade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060a10;
+      --bg2: #0c1220;
+      --surface: #111827;
+      --border: #1e2d45;
+      --accent: #00d4ff;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --white: #f8fafc;
+      --glow: 0 0 40px rgba(0,212,255,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(6,10,16,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--muted); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 140px 5% 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header-glow {
+      position: absolute;
+      width: 500px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 70%);
+      top: 50%; right: 10%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--accent); }
+
+    .page-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .page-title span { color: var(--accent); }
+
+    .page-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* TIMELINE STATS BAR */
+    .stats-bar {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      margin: 0 5% 0;
+      background: var(--surface);
+    }
+
+    .stats-bar-item {
+      flex: 1;
+      padding: 20px 28px;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+
+    .stats-bar-item:last-child { border-right: none; }
+
+    .stats-bar-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+
+    .stats-bar-item:hover::before { transform: scaleX(1); }
+
+    .stats-bar-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stats-bar-num span { color: var(--accent); }
+
+    .stats-bar-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* MAIN CONTENT */
+    .exp-page-content {
+      padding: 60px 5% 100px;
+      position: relative;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--border), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 72px;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -46px;
+      top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(0,212,255,0.5);
+      border: 2px solid var(--bg);
+    }
+
+    .timeline-dot.current {
+      animation: dotPulse 2s infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(0,212,255,0.5); }
+      50% { box-shadow: 0 0 24px rgba(0,212,255,0.9); }
+    }
+
+    .timeline-connector {
+      position: absolute;
+      left: -40px;
+      top: 18px;
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, var(--accent), var(--border));
+    }
+
+    .timeline-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .timeline-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+
+    .timeline-card:hover { border-color: rgba(0,212,255,0.25); box-shadow: var(--glow); }
+    .timeline-card:hover::before { transform: scaleX(1); }
+
+    .timeline-card.current-job {
+      border-color: rgba(0,212,255,0.2);
+      background: linear-gradient(135deg, rgba(0,212,255,0.04) 0%, var(--surface) 50%);
+    }
+
+    .timeline-card.current-job::before { transform: scaleX(1); background: var(--accent); }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .job-title-block { flex: 1; }
+
+    .job-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .job-company-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .job-company {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .job-location {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      letter-spacing: 1px;
+    }
+
+    .job-meta-right { text-align: right; flex-shrink: 0; }
+
+    .job-period {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .job-duration {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--accent3);
+      padding: 3px 10px;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.25);
+      letter-spacing: 1px;
+    }
+
+    .current-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      padding: 3px 10px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.3);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .job-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 24px;
+    }
+
+    /* RESPONSIBILITIES */
+    .responsibilities-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .exp-points { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+
+    .exp-points li {
+      font-size: 15px;
+      color: #94a3b8;
+      padding-left: 24px;
+      position: relative;
+      line-height: 1.7;
+    }
+
+    .exp-points li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 12px;
+      top: 3px;
+    }
+
+    /* HIGHLIGHT CHIPS */
+    .highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .highlight-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(0,212,255,0.06);
+      border: 1px solid rgba(0,212,255,0.15);
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .highlight-chip svg { flex-shrink: 0; }
+
+    /* TECH STACK */
+    .tech-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+
+    .tag:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,0.05); }
+
+    /* SKILLS SUMMARY SIDEBAR */
+    .exp-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .sidebar { position: sticky; top: 100px; }
+
+    .sidebar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-skill {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .sidebar-skill:last-child { margin-bottom: 0; }
+
+    .sidebar-skill-name {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .sidebar-skill-years {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    .sidebar-skill-bar {
+      width: 100%;
+      height: 2px;
+      background: var(--border);
+      margin-top: 4px;
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .sidebar-skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 1px;
+      transition: width 1.5s ease;
+      width: 0;
+    }
+
+    .company-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .company-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .company-pill:hover { border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.03); }
+
+    .company-pill-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .company-pill-years {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    /* ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* CURSOR */
+    .cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.15s; mix-blend-mode: screen; }
+    .cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,212,255,0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: all 0.3s ease; mix-blend-mode: screen; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    @media (max-width: 900px) {
+      .exp-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .stats-bar { flex-wrap: wrap; }
+      .stats-bar-item { min-width: 50%; border-bottom: 1px solid var(--border); }
+      .nav-links { display: none; }
+      .job-header { flex-direction: column; }
+      .job-meta-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="grid-bg"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">PL<span>/</span>dev</a>
+  <ul class="nav-links">
+    <li><a href="index.html#hero">Home</a></li>
+    <li><a href="experience.html" class="active">Experience</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-glow"></div>
+  <a href="index.html" class="back-link">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Home
+  </a>
+  <div class="page-label">// work history</div>
+  <h1 class="page-title">Work<br><span>Experience</span><span style="color:var(--accent)">.</span></h1>
+  <p class="page-subtitle">9+ years of frontend engineering across enterprise, banking, e-commerce, and government domains.</p>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-item">
+    <div class="stats-bar-num">9<span>+</span></div>
+    <div class="stats-bar-label">Years Total</div>
+  </div>
+  <div class="stats-bar-item">
+    <div class="stats-bar-num">4</div>
+    <div class="stats-bar-label">Companies</div>
+  </div>
+  <div class="stats-bar-item">
+    <div class="stats-bar-num">10<span>+</span></div>
+    <div class="stats-bar-label">React Projects</div>
+  </div>
+  <div class="stats-bar-item">
+    <div class="stats-bar-num">50<span>+</span></div>
+    <div class="stats-bar-label">Websites Built</div>
+  </div>
+  <div class="stats-bar-item">
+    <div class="stats-bar-num">3</div>
+    <div class="stats-bar-label">Domains</div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="exp-page-content">
+  <div class="exp-layout">
+
+    <!-- TIMELINE -->
+    <div>
+      <div class="timeline">
+
+        <!-- JOB 1 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot current"></div>
+          <div class="timeline-connector"></div>
+          <div class="timeline-card current-job">
+            <div class="job-header">
+              <div class="job-title-block">
+                <div class="job-role">Software Prod & Plat Eng Specialist</div>
+                <div class="job-company-row">
+                  <span class="job-company">Accenture</span>
+                  <span class="job-location">Mumbai, IN</span>
+                </div>
+              </div>
+              <div class="job-meta-right">
+                <div class="current-badge">● CURRENT</div>
+                <div class="job-period">Jul 2024 — Present</div>
+                <span class="job-duration">~1 yr</span>
+              </div>
+            </div>
+            <div class="job-divider"></div>
+
+            <div class="highlights">
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Frontend Architecture
+              </span>
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                CI/CD Pipelines
+              </span>
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+                Client Interfacing
+              </span>
+            </div>
+
+            <div class="responsibilities-title">// Key Responsibilities</div>
+            <ul class="exp-points">
+              <li>Led the architecture of two React.js applications for Accenture, powering resource portal management across the global and India regions.</li>
+              <li>Interfaced directly with clients to gather, refine, and validate requirements, translating business needs into scalable technical solutions.</li>
+              <li>Established and optimized CI/CD pipelines using Azure DevOps, automating build and release workflows across development, staging, and production environments.</li>
+              <li>Implemented performance optimization strategies including bundle splitting, React-Query caching, memoization, and MUI virtualization — resulting in smoother UX and reduced load times.</li>
+              <li>Collaborated with cross-functional teams (backend, QA, architects, product owners) to ensure seamless API integration, robust error handling, and adherence to security and accessibility standards.</li>
+            </ul>
+
+            <div class="tech-title">// Tech Stack</div>
+            <div class="exp-tags">
+              <span class="tag">ReactJS</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">Redux</span><span class="tag">React-Query</span><span class="tag">Material UI</span><span class="tag">MUI-Datatable</span><span class="tag">Azure DevOps</span><span class="tag">RTL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- JOB 2 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-connector"></div>
+          <div class="timeline-card">
+            <div class="job-header">
+              <div class="job-title-block">
+                <div class="job-role">Specialist — Software Engineering</div>
+                <div class="job-company-row">
+                  <span class="job-company">LTIMindtree</span>
+                  <span class="job-location">Mumbai, IN</span>
+                </div>
+              </div>
+              <div class="job-meta-right">
+                <div class="job-period">Mar 2021 — Jun 2024</div>
+                <span class="job-duration">3 yrs 3 mos</span>
+              </div>
+            </div>
+            <div class="job-divider"></div>
+
+            <div class="highlights">
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Top MNC Banking
+              </span>
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Data Visualization
+              </span>
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                Full Stack
+              </span>
+            </div>
+
+            <div class="responsibilities-title">// Key Responsibilities</div>
+            <ul class="exp-points">
+              <li>Led the end-to-end development of a ReactJS web application for a top MNC bank, built on a React-Redux, Java, and Couchbase stack.</li>
+              <li>Designed and implemented an Inventory Dashboard WebApp from the ground up, incorporating AG Grid and Highcharts for dynamic tabular and graphical data visualization.</li>
+              <li>Collaborated closely with backend teams to design and integrate RESTful APIs, ensuring data integrity and optimal performance.</li>
+              <li>Established component architecture patterns for maintainability and reusability across the project.</li>
+            </ul>
+
+            <div class="tech-title">// Tech Stack</div>
+            <div class="exp-tags">
+              <span class="tag">ReactJS</span><span class="tag">Redux</span><span class="tag">Java</span><span class="tag">Couchbase</span><span class="tag">AG Grid</span><span class="tag">Highcharts</span><span class="tag">REST APIs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- JOB 3 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-connector"></div>
+          <div class="timeline-card">
+            <div class="job-header">
+              <div class="job-title-block">
+                <div class="job-role">System Engineer — UI</div>
+                <div class="job-company-row">
+                  <span class="job-company">Tata Consultancy Services</span>
+                  <span class="job-location">Mumbai, IN</span>
+                </div>
+              </div>
+              <div class="job-meta-right">
+                <div class="job-period">Jan 2019 — Feb 2021</div>
+                <span class="job-duration">2 yrs 1 mo</span>
+              </div>
+            </div>
+            <div class="job-divider"></div>
+
+            <div class="highlights">
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                Gov & Education
+              </span>
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                Payment Integration
+              </span>
+            </div>
+
+            <div class="responsibilities-title">// Key Responsibilities</div>
+            <ul class="exp-points">
+              <li>Developed web-based forms for major clients across India, including CAT and IISER, using ReactJS, Java, SQL, and JavaScript.</li>
+              <li>Created a generic utility for form creation, incorporating features such as age and fee relaxation calculations, as well as payment integration.</li>
+              <li>Worked on progress report generation for online exams, ensuring accurate data tracking and reporting.</li>
+              <li>Implemented complex form logic handling thousands of concurrent users during peak application periods.</li>
+            </ul>
+
+            <div class="tech-title">// Tech Stack</div>
+            <div class="exp-tags">
+              <span class="tag">ReactJS</span><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">JavaScript</span><span class="tag">Payment Gateway</span><span class="tag">HTML/CSS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- JOB 4 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-connector"></div>
+          <div class="timeline-card">
+            <div class="job-header">
+              <div class="job-title-block">
+                <div class="job-role">UI Developer</div>
+                <div class="job-company-row">
+                  <span class="job-company">Media.net</span>
+                  <span class="job-location">Mumbai, IN</span>
+                </div>
+              </div>
+              <div class="job-meta-right">
+                <div class="job-period">Jun 2016 — Dec 2018</div>
+                <span class="job-duration">2 yrs 6 mos</span>
+              </div>
+            </div>
+            <div class="job-divider"></div>
+
+            <div class="highlights">
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                E-Commerce
+              </span>
+              <span class="highlight-chip">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                Responsive Design
+              </span>
+            </div>
+
+            <div class="responsibilities-title">// Key Responsibilities</div>
+            <ul class="exp-points">
+              <li>Built the frontend for e-commerce websites and templates from scratch using HTML, CSS, JavaScript, and jQuery.</li>
+              <li>Developed 50+ responsive web and mobile websites, ensuring cross-browser compatibility and optimized performance.</li>
+              <li>Worked on ad-based monetization integrations for high-traffic e-commerce properties.</li>
+            </ul>
+
+            <div class="tech-title">// Tech Stack</div>
+            <div class="exp-tags">
+              <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">jQuery</span><span class="tag">Responsive Design</span><span class="tag">Bootstrap</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end timeline -->
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <div class="sidebar-card reveal">
+        <div class="sidebar-title">// Core Skills</div>
+        <div>
+          <div class="sidebar-skill">
+            <div>
+              <div class="sidebar-skill-name">React.js</div>
+              <div class="sidebar-skill-bar"><div class="sidebar-skill-fill" data-width="96"></div></div>
+            </div>
+            <div class="sidebar-skill-years">9 yrs</div>
+          </div>
+          <div class="sidebar-skill">
+            <div>
+              <div class="sidebar-skill-name">JavaScript</div>
+              <div class="sidebar-skill-bar"><div class="sidebar-skill-fill" data-width="94"></div></div>
+            </div>
+            <div class="sidebar-skill-years">9 yrs</div>
+          </div>
+          <div class="sidebar-skill">
+            <div>
+              <div class="sidebar-skill-name">Redux / React-Query</div>
+              <div class="sidebar-skill-bar"><div class="sidebar-skill-fill" data-width="92"></div></div>
+            </div>
+            <div class="sidebar-skill-years">6 yrs</div>
+          </div>
+          <div class="sidebar-skill">
+            <div>
+              <div class="sidebar-skill-name">TypeScript</div>
+              <div class="sidebar-skill-bar"><div class="sidebar-skill-fill" data-width="85"></div></div>
+            </div>
+            <div class="sidebar-skill-years">3 yrs</div>
+          </div>
+          <div class="sidebar-skill">
+            <div>
+              <div class="sidebar-skill-name">Azure DevOps</div>
+              <div class="sidebar-skill-bar"><div class="sidebar-skill-fill" data-width="80"></div></div>
+            </div>
+            <div class="sidebar-skill-years">1 yr</div>
+          </div>
+          <div class="sidebar-skill">
+            <div>
+              <div class="sidebar-skill-name">HTML / CSS</div>
+              <div class="sidebar-skill-bar"><div class="sidebar-skill-fill" data-width="97"></div></div>
+            </div>
+            <div class="sidebar-skill-years">9 yrs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-card reveal">
+        <div class="sidebar-title">// Companies</div>
+        <div class="company-list">
+          <div class="company-pill">
+            <span class="company-pill-name">Accenture</span>
+            <span class="company-pill-years">2024–Now</span>
+          </div>
+          <div class="company-pill">
+            <span class="company-pill-name">LTIMindtree</span>
+            <span class="company-pill-years">2021–2024</span>
+          </div>
+          <div class="company-pill">
+            <span class="company-pill-name">TCS</span>
+            <span class="company-pill-years">2019–2021</span>
+          </div>
+          <div class="company-pill">
+            <span class="company-pill-name">Media.net</span>
+            <span class="company-pill-years">2016–2018</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-card reveal">
+        <div class="sidebar-title">// Education</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;">B.E. Computer Engineering</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:4px;">Vidyalankar Institute of Technology</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);">Graduated 2015</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer style="padding:24px 5%;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+  <p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;">© 2025 Prasad Lakade</p>
+  <a href="index.html#contact" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;letter-spacing:1px;">GET IN TOUCH →</a>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 4 + 'px';
+    cursor.style.top = my - 4 + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx - 16) * 0.12;
+    ry += (my - ry - 16) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        entry.target.querySelectorAll('.sidebar-skill-fill').forEach(bar => {
+          bar.style.width = bar.getAttribute('data-width') + '%';
+        });
+      }
+    });
+  }, { threshold: 0.08 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a, .timeline-card, .company-pill').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(3)'; ring.style.transform = 'scale(1.5)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
+  });
+</script>
+</body>
+</html>
