@@ -951,11 +951,13 @@
 </section>
 
 <footer>
-  <p>© 2025 Prasad Lakade — Frontend Engineer</p>
+  <p>© <span id="copyright-year"></span> Prasad Lakade — Frontend Engineer</p>
   <p>Built with HTML · CSS · JS</p>
 </footer>
 
 <script>
+  document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
